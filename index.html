@@ -1,1 +1,1079 @@
 
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ตารางผ่อน ดลโมบาย</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --brand:#2C71B8; --brand-deep:#1B4E85; --brand-wash:#EAF1F9;
+  --ink:#15202E; --ink-2:#44566B; --ink-3:#7A8CA0;
+  --ground:#F2F5F9; --surface:#FFFFFF; --surface-2:#F7FAFD;
+  --line:#DDE5EE; --line-strong:#C3D0DE;
+  --accent:#D9822B; --accent-wash:#FDF2E4;
+  --ok:#1C7F57; --danger:#BE3B33; --danger-wash:#FBEDEC;
+  --shadow:0 1px 2px rgba(21,32,46,.06), 0 8px 24px -12px rgba(21,32,46,.18);
+  --radius:10px; color-scheme:light dark;
+  --paper-w:297mm;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --brand:#5D9BE0; --brand-deep:#8FBDEC; --brand-wash:#18293D;
+    --ink:#E8EFF7; --ink-2:#A9BCCF; --ink-3:#7B8EA3;
+    --ground:#0E161F; --surface:#16202C; --surface-2:#1B2733;
+    --line:#2A3949; --line-strong:#3A4C60;
+    --accent:#E8A45C; --accent-wash:#2E2416;
+    --ok:#4FBF8E; --danger:#E4746B; --danger-wash:#331E1C;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -14px rgba(0,0,0,.7);
+  }
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans Thai","Noto Sans Thai",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:14px; line-height:1.55; -webkit-text-size-adjust:100%;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+h1,h2,h3,.display{font-family:"Bai Jamjuree","IBM Plex Sans Thai",system-ui,sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:4px}
+
+.topbar{position:sticky;top:0;z-index:40;background:var(--surface);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:1400px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.lockup{display:flex;align-items:center;gap:10px;min-width:0}
+.lockup img{height:30px;width:auto;display:block}
+.lockup .t{font-family:"Bai Jamjuree",sans-serif;font-weight:700;font-size:16px;white-space:nowrap}
+.lockup .s{color:var(--ink-3);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+.spacer{flex:1 1 auto}
+.bar-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:8px;
+  border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);cursor:pointer;
+  font-weight:500;font-size:13px;transition:background .12s,border-color .12s}
+.btn:hover{background:var(--surface-2);border-color:var(--brand)}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn.primary:hover{background:var(--brand-deep);border-color:var(--brand-deep)}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--ink-2)}
+.btn.ghost:hover{background:var(--surface-2);color:var(--ink)}
+.btn.danger{color:var(--danger)}
+.btn.danger:hover{background:var(--danger-wash);border-color:var(--danger)}
+.btn.sm{padding:4px 9px;font-size:12px;border-radius:7px}
+.btn:disabled{opacity:.55;cursor:progress}
+
+.rail{background:var(--surface);border-bottom:1px solid var(--line)}
+.rail-in{max-width:1400px;margin:0 auto;padding:0 16px 10px;display:flex;gap:8px;align-items:center;overflow-x:auto}
+.tab{position:relative;flex:0 0 auto;display:flex;flex-direction:column;gap:1px;align-items:flex-start;
+  padding:7px 32px 7px 14px;border-radius:9px;border:1px solid var(--line);background:var(--surface-2);cursor:pointer;text-align:left}
+.tab:hover{border-color:var(--brand)}
+.tabx{position:absolute;top:50%;right:6px;transform:translateY(-50%);border:0;background:transparent;
+  color:inherit;opacity:.4;cursor:pointer;font-size:12px;line-height:1;padding:4px 5px;border-radius:6px}
+.tab:hover .tabx,.tab[aria-selected="true"] .tabx{opacity:.75}
+.tabx:hover{opacity:1;background:var(--danger-wash);color:var(--danger)}
+.tab[aria-selected="true"] .tabx:hover{background:rgba(255,255,255,.24);color:#fff}
+.tab[aria-selected="true"]{background:var(--brand);border-color:var(--brand);color:#fff}
+.tab .n{font-family:"Bai Jamjuree",sans-serif;font-weight:600;font-size:13.5px;white-space:nowrap}
+.tab .d{font-size:11px;opacity:.75;white-space:nowrap;font-variant-numeric:tabular-nums}
+
+.wrap{max-width:1400px;margin:0 auto;padding:18px 16px 60px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.panel + .panel{margin-top:16px}
+.panel-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;border-bottom:1px solid var(--line)}
+.panel-head h2{margin:0;font-size:15px;font-weight:600}
+.panel-body{padding:14px 16px}
+.eyebrow{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.f{display:flex;flex-direction:column;gap:4px;min-width:0}
+.f label{font-size:11.5px;font-weight:600;color:var(--ink-2)}
+.f input,.f select,.f textarea{width:100%;padding:7px 9px;border:1px solid var(--line-strong);border-radius:7px;background:var(--surface-2)}
+.f textarea{resize:vertical;min-height:62px;line-height:1.5}
+.f input:focus,.f select:focus,.f textarea:focus{background:var(--surface);border-color:var(--brand);outline:none}
+.hint{font-size:11.5px;color:var(--ink-3)}
+.check{display:inline-flex;align-items:center;gap:7px;font-size:13px;cursor:pointer;padding:4px 0}
+.check input{width:15px;height:15px;accent-color:var(--brand);margin:0}
+
+.gridwrap{overflow-x:auto;border-top:1px solid var(--line)}
+table.grid{border-collapse:separate;border-spacing:0;width:100%;min-width:900px}
+table.grid th,table.grid td{border-bottom:1px solid var(--line);padding:0;text-align:left}
+table.grid thead th{position:sticky;top:0;z-index:2;background:var(--surface-2);padding:9px 10px;
+  font-size:11.5px;font-weight:700;color:var(--ink-2);white-space:nowrap;border-bottom:1px solid var(--line-strong)}
+table.grid thead th .sub{display:block;font-weight:500;font-size:10.5px;color:var(--ink-3)}
+th.g-internal,td.g-internal{background:var(--accent-wash)}
+th.g-tenor,td.g-tenor{background:var(--brand-wash)}
+table.grid td input{width:100%;border:0;background:transparent;padding:8px 10px;font-variant-numeric:tabular-nums}
+table.grid td input:focus{outline:2px solid var(--brand);outline-offset:-2px;background:var(--surface)}
+table.grid td.num input{text-align:right}
+table.grid tbody tr:hover td{box-shadow:inset 0 0 0 9999px rgba(44,113,184,.035)}
+table.grid td.model input{min-width:170px}
+table.grid td.cap input{min-width:92px}
+table.grid td.calc{padding:8px 14px;text-align:right;color:var(--ink-3);font-variant-numeric:tabular-nums;font-size:13px}
+td.rowtools{white-space:nowrap;padding:0 8px}
+.rowbtn{border:0;background:transparent;color:var(--ink-3);cursor:pointer;padding:4px 5px;border-radius:5px;font-size:13px;line-height:1}
+.rowbtn:hover{background:var(--surface-2);color:var(--ink)}
+.rowbtn.del:hover{background:var(--danger-wash);color:var(--danger)}
+.colmove{display:inline-flex;align-items:center;gap:1px}
+.movebtn{border:0;background:transparent;color:var(--ink-3);cursor:pointer;padding:0 3px;line-height:1;font-size:15px;border-radius:4px}
+.movebtn:hover:not(:disabled){background:var(--brand);color:#fff}
+.movebtn:disabled{opacity:.22;cursor:default}
+thead th[draggable]{cursor:grab}
+thead th.drag-left{box-shadow:inset 3px 0 0 var(--brand)}
+thead th.drag-right{box-shadow:inset -3px 0 0 var(--brand)}
+.tablebar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:11px 16px}
+.search input{width:220px;padding:6px 10px;border:1px solid var(--line-strong);border-radius:7px;background:var(--surface-2)}
+.empty{padding:34px 16px;text-align:center;color:var(--ink-3)}
+
+/* ---------- render root (offscreen live DOM for print + pdf) ---------- */
+#renderRoot{position:absolute;left:-9999px;top:0;width:var(--paper-w);background:#fff}
+
+.paper{width:var(--paper-w);min-height:200mm;background:#fff;color:#15202E;padding:10mm 12mm;
+  margin:0 auto 14px;border:1px solid var(--line);border-radius:4px;box-shadow:var(--shadow);
+  display:flex;flex-direction:column;font-family:"IBM Plex Sans Thai","Noto Sans Thai",sans-serif}
+#renderRoot .paper{border:0;border-radius:0;box-shadow:none;margin:0;page-break-after:always;break-after:page}
+#renderRoot .paper:last-child{page-break-after:auto;break-after:auto}
+.paper-head{display:flex;align-items:flex-start;gap:14px;border-bottom:2.5px solid #2C71B8;padding-bottom:7px}
+.paper-logo{height:15mm;width:auto;flex:0 0 auto;object-fit:contain}
+.paper-id{flex:1 1 auto;min-width:0}
+.paper-shop{font-family:"Bai Jamjuree",sans-serif;font-weight:700;font-size:17pt;line-height:1.15;color:#1B4E85}
+.paper-contact{font-size:8.5pt;color:#44566B;line-height:1.4;white-space:pre-line}
+.paper-meta{text-align:right;flex:0 0 auto}
+.paper-title{font-family:"Bai Jamjuree",sans-serif;font-weight:700;font-size:15pt;line-height:1.2;color:#15202E}
+.paper-rate{display:inline-block;margin-top:2px;padding:1px 9px;border-radius:999px;background:#2C71B8;color:#fff;font-size:9.5pt;font-weight:600}
+.paper-date{margin-top:3px;font-size:9pt;color:#44566B;font-variant-numeric:tabular-nums}
+.paper-date b{color:#D9822B}
+table.paper-table{width:100%;border-collapse:collapse;margin-top:7px;font-variant-numeric:tabular-nums}
+table.paper-table th{background:#1B4E85;color:#fff;font-weight:600;font-size:9.5pt;padding:5px 6px;
+  border:.6px solid #1B4E85;text-align:right;white-space:nowrap}
+table.paper-table th.l{text-align:left}
+table.paper-table th .sub{display:block;font-weight:400;font-size:7.5pt;opacity:.85}
+table.paper-table td{padding:4.5px 6px;border:.6px solid #C3D0DE;font-size:10pt;text-align:right;white-space:nowrap}
+table.paper-table td.l{text-align:left;font-weight:600}
+table.paper-table tbody tr:nth-child(even) td{background:#F2F6FB}
+table.paper-table td.hero{background:#FDF2E4;font-weight:700;color:#A8611A}
+table.paper-table tbody tr:nth-child(even) td.hero{background:#FBE9D2}
+table.paper-table td.dash{color:#9AA9B8}
+.paper-foot{margin-top:auto;padding-top:8px;display:flex;gap:14px;align-items:flex-end;border-top:1px solid #DDE5EE}
+.paper-cond{flex:1 1 auto;font-size:8.5pt;color:#44566B;line-height:1.5}
+.paper-cond .ttl{font-weight:700;color:#15202E;font-size:9pt}
+.paper-cond ul{margin:2px 0 0;padding-left:15px}
+.paper-sign{flex:0 0 auto;text-align:center;font-size:8pt;color:#44566B}
+.paper-sign .line{width:42mm;border-bottom:1px dotted #7A8CA0;height:9mm}
+
+.modal{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;
+  padding:16px;background:rgba(21,32,46,.5)}
+.modal[hidden]{display:none}
+.modal-card{background:var(--surface);border-radius:12px;border:1px solid var(--line);
+  box-shadow:var(--shadow);width:min(640px,100%);max-height:86vh;display:flex;flex-direction:column}
+.modal-card header{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.modal-card header h2{margin:0;font-size:15px}
+.modal-card .body{padding:14px 16px;overflow:auto}
+.modal-card footer{padding:12px 16px;border-top:1px solid var(--line);display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.pick-search{width:100%;padding:8px 11px;border:1px solid var(--line-strong);border-radius:8px;background:var(--surface-2);margin-bottom:12px}
+.pick-series{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);font-weight:700;
+  margin:14px 0 5px;padding-bottom:4px;border-bottom:1px solid var(--line)}
+.pick-series:first-child{margin-top:0}
+.pick-row{display:flex;align-items:center;gap:10px;padding:5px 6px;border-radius:8px;flex-wrap:wrap}
+.pick-row:hover{background:var(--surface-2)}
+.pick-name{flex:0 0 168px;font-weight:600;font-size:13px}
+.capbtn{padding:3px 11px;border:1px solid var(--line-strong);border-radius:999px;background:var(--surface);
+  cursor:pointer;font-size:12px;font-weight:500;font-variant-numeric:tabular-nums}
+.capbtn:hover{border-color:var(--brand);color:var(--brand)}
+.modal-card textarea{width:100%;min-height:230px;font-family:ui-monospace,monospace;font-size:12px;
+  border:1px solid var(--line-strong);border-radius:8px;padding:10px;background:var(--surface-2);resize:vertical}
+
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));
+  background:var(--ink);color:var(--ground);padding:9px 16px;border-radius:999px;font-size:13px;font-weight:500;
+  z-index:90;box-shadow:var(--shadow);display:flex;align-items:center;gap:14px;max-width:calc(100vw - 32px)}
+.toast[hidden]{display:none}
+.toast-act{border:0;background:transparent;color:var(--accent);font-weight:700;cursor:pointer;
+  padding:2px;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+
+@media (max-width:640px){
+  .lockup .s{display:none}
+  .paper{width:auto;min-width:0;padding:12px}
+  .paper-logo{height:34px}
+  .paper-shop{font-size:16px}
+  .paper-title{font-size:15px}
+  table.paper-table th,table.paper-table td{font-size:11px}
+  .search input{width:100%}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+@page{margin:8mm}
+@media print{
+  body{background:#fff!important;padding:0!important}
+  .app,.modal,.toast{display:none!important}
+  #renderRoot{position:static!important;left:auto!important;top:auto!important;width:auto!important;background:#fff}
+  #renderRoot .paper{width:auto;min-height:0;margin:0;padding:0;border:0;border-radius:0;box-shadow:none;background:#fff}
+  table.paper-table{break-inside:auto}
+  table.paper-table thead{display:table-header-group}
+  table.paper-table tr{break-inside:avoid;page-break-inside:avoid}
+  .paper-foot{break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="app" id="app">
+  <div class="topbar">
+    <div class="topbar-in">
+      <div class="lockup">
+        <img id="brandLogo" alt="">
+        <div>
+          <div class="t">ตารางผ่อน</div>
+          <div class="s">Don Mobile · Installment Sheets</div>
+        </div>
+      </div>
+      <div class="spacer"></div>
+      <div class="bar-actions">
+        <button class="btn ghost" id="btnShop" type="button">ข้อมูลร้าน</button>
+        <button class="btn ghost" id="btnData" type="button">สำรอง / กู้คืนข้อมูล</button>
+        <button class="btn" id="btnPick" type="button">+ เพิ่มรุ่น</button>
+        <label class="check"><input type="checkbox" id="prevAll"> ทุกตาราง</label>
+        <select class="btn" id="paperSel" style="padding:6px 8px" aria-label="ตั้งค่ากระดาษ"></select>
+        <button class="btn" id="btnPrint" type="button">พิมพ์</button>
+        <button class="btn primary" id="btnPdf" type="button">บันทึก PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="rail">
+    <div class="rail-in" id="rail" role="tablist" aria-label="ตารางผ่อนทั้งหมด"></div>
+  </div>
+
+  <div class="wrap">
+    <section class="panel">
+      <div class="panel-head">
+        <span class="eyebrow">รายละเอียดตาราง</span>
+        <div class="spacer"></div>
+        <button class="btn sm" id="btnDup" type="button">คัดลอกตารางนี้</button>
+        <button class="btn sm danger" id="btnDelSheet" type="button">ลบตารางนี้</button>
+      </div>
+      <div class="panel-body">
+        <div class="fields">
+          <div class="f">
+            <label for="m-provider">บริษัทสินเชื่อ</label>
+            <input id="m-provider" list="providerList" placeholder="เช่น VNC">
+            <datalist id="providerList">
+              <option value="VNC"></option>
+              <option value="Senpay By Isarawat"></option>
+              <option value="SG Finance"></option>
+            </datalist>
+          </div>
+          <div class="f">
+            <label for="m-condition">ประเภทเครื่อง</label>
+            <input id="m-condition" list="condList" placeholder="เช่น มือ 1">
+            <datalist id="condList">
+              <option value="มือ 1"></option>
+              <option value="มือ 2"></option>
+            </datalist>
+          </div>
+          <div class="f">
+            <label for="m-rate">เรทดาวน์ระบบ (%)</label>
+            <input id="m-rate" inputmode="decimal" placeholder="25">
+          </div>
+          <div class="f">
+            <label for="m-date">วันที่อัปเดต</label>
+            <input id="m-date" type="date" readonly style="background:var(--surface-2);color:var(--ink-3);cursor:default">
+          </div>
+          <div class="f">
+            <label for="m-by">ผู้อัปเดต</label>
+            <input id="m-by" placeholder="ชื่อผู้กรอก">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <span class="eyebrow">รายการสินค้า</span>
+        <div class="spacer"></div>
+        <button class="btn sm" id="btnAddRow" type="button">+ เพิ่มแถว</button>
+        <button class="btn sm" id="btnAddTenor" type="button">+ เพิ่มงวด</button>
+      </div>
+      <div class="tablebar">
+        <div class="search"><input id="rowSearch" placeholder="ค้นหารุ่น / ความจุ…"></div>
+        <span class="hint" id="rowCount"></span>
+      </div>
+      <div class="gridwrap" id="gridwrap"></div>
+    </section>
+  </div>
+</div>
+
+<!-- offscreen live DOM: ใช้ทั้งตอนพิมพ์ และตอนสร้าง PDF -->
+<div id="renderRoot" aria-hidden="true"></div>
+
+<!-- modal: model picker -->
+<div class="modal" id="pickModal" hidden>
+  <div class="modal-card">
+    <header><h2>เลือกรุ่น / ความจุ</h2><div class="spacer"></div>
+      <button class="btn ghost sm" data-close type="button">ปิด</button></header>
+    <div class="body">
+      <input class="pick-search" id="pickSearch" placeholder="ค้นหารุ่น…">
+      <div id="pickList"></div>
+    </div>
+    <footer><button class="btn" data-close type="button">ปิด</button></footer>
+  </div>
+</div>
+
+<!-- modal: shop -->
+<div class="modal" id="shopModal" hidden>
+  <div class="modal-card">
+    <header><h2>ข้อมูลร้าน (หัวใบพิมพ์)</h2><div class="spacer"></div>
+      <button class="btn ghost sm" data-close type="button">ปิด</button></header>
+    <div class="body">
+      <div class="fields">
+        <div class="f" style="grid-column:1/-1"><label for="s-name">ชื่อร้าน</label><input id="s-name"></div>
+        <div class="f" style="grid-column:1/-1"><label for="s-addr">ที่อยู่ / เบอร์โทร (ขึ้นบรรทัดใหม่ได้)</label><textarea id="s-addr"></textarea></div>
+        <div class="f" style="grid-column:1/-1"><label for="s-logo">URL โลโก้ (เว้นว่าง = ไม่แสดง)</label><input id="s-logo" placeholder="https://..."></div>
+        <div class="f" style="grid-column:1/-1"><label for="s-terms">เงื่อนไขท้ายใบ (บรรทัดละข้อ)</label><textarea id="s-terms"></textarea></div>
+        <div class="f"><label for="s-sign">ชื่อผู้เสนอราคา</label><input id="s-sign"></div>
+        <div class="f"><label for="s-signsub">ตำแหน่ง</label><input id="s-signsub"></div>
+      </div>
+    </div>
+    <footer><button class="btn primary" id="btnShopSave" type="button">บันทึก</button></footer>
+  </div>
+</div>
+
+<!-- modal: data -->
+<div class="modal" id="dataModal" hidden>
+  <div class="modal-card">
+    <header><h2>สำรอง / กู้คืนข้อมูล</h2><div class="spacer"></div>
+      <button class="btn ghost sm" data-close type="button">ปิด</button></header>
+    <div class="body">
+      <p class="hint" style="margin-top:0">คัดลอกข้อความด้านล่างเก็บไว้ หรือวางข้อมูลเดิมแล้วกด “นำเข้า”</p>
+      <textarea id="dataText" spellcheck="false"></textarea>
+    </div>
+    <footer>
+      <button class="btn" id="btnCopyData" type="button">คัดลอก</button>
+      <button class="btn" id="btnDownloadData" type="button">ดาวน์โหลด .json</button>
+      <button class="btn danger" id="btnImportData" type="button">นำเข้า</button>
+      <button class="btn primary" data-close type="button">ปิด</button>
+    </footer>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.2/dist/html2pdf.bundle.min.js"></script>
+<script>
+/* ================= utils ================= */
+const $  = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const uid = () => Math.random().toString(36).slice(2, 9);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const num = v => { const n = parseFloat(String(v ?? '').replace(/,/g, '')); return isFinite(n) ? n : 0; };
+const has = v => v !== '' && v != null && isFinite(parseFloat(String(v).replace(/,/g,'')));
+const fmt = n => has(n) ? Number(n).toLocaleString('th-TH', { maximumFractionDigits: 2 }) : '—';
+const todayISO = () => { const d = new Date(); return new Date(d.getTime() - d.getTimezoneOffset()*6e4).toISOString().slice(0,10); };
+const thDate = iso => {
+  if (!iso) return '';
+  const d = new Date(iso + 'T00:00:00');
+  if (isNaN(d)) return '';
+  const p = n => String(n).padStart(2,'0');
+  return `${p(d.getDate())}/${p(d.getMonth()+1)}/${d.getFullYear()+543}`;
+};
+const debounce = (fn, ms=350) => { let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; };
+
+/* ================= catalog ================= */
+const CATALOG = {
+  'iPhone 15': ['128GB','256GB','512GB'],
+  'iPhone 15 Plus': ['128GB','256GB','512GB'],
+  'iPhone 15 Pro': ['128GB','256GB','512GB','1TB'],
+  'iPhone 15 Pro Max': ['256GB','512GB','1TB'],
+  'iPhone 16': ['128GB','256GB','512GB'],
+  'iPhone 16 Plus': ['128GB','256GB','512GB'],
+  'iPhone 16 Pro': ['128GB','256GB','512GB','1TB'],
+  'iPhone 16 Pro Max': ['256GB','512GB','1TB'],
+  'iPhone 17': ['256GB','512GB'],
+  'iPhone 17 Pro': ['256GB','512GB','1TB'],
+  'iPhone 17 Pro Max': ['256GB','512GB','1TB','2TB'],
+  'iPad 10.9': ['64GB','256GB'],
+  'iPad Air 11': ['128GB','256GB','512GB','1TB'],
+  'iPad Pro 11': ['256GB','512GB','1TB'],
+  'Samsung Galaxy S24': ['256GB','512GB'],
+  'Samsung Galaxy S24 Ultra': ['256GB','512GB','1TB'],
+  'Samsung Galaxy S25': ['256GB','512GB'],
+  'Samsung Galaxy S25 Ultra': ['256GB','512GB','1TB'],
+  'Samsung Galaxy A55': ['128GB','256GB'],
+  'Samsung Galaxy A56': ['128GB','256GB'],
+  'OPPO Reno 12': ['256GB','512GB'],
+  'OPPO Reno 13': ['256GB','512GB'],
+  'OPPO Find X8': ['256GB','512GB'],
+  'vivo V40': ['256GB','512GB'],
+  'vivo X200': ['256GB','512GB'],
+  'Xiaomi 14T': ['256GB','512GB'],
+  'Xiaomi 15': ['256GB','512GB'],
+  'Redmi Note 14 Pro': ['128GB','256GB'],
+  'realme 12 Pro+': ['256GB','512GB'],
+  'HONOR X9c': ['256GB','512GB'],
+};
+const ALL_CAPS = [...new Set(Object.values(CATALOG).flat())];
+
+/* ================= state ================= */
+const LS_KEY = 'donmobile.sheets.v2';
+const DEFAULT_SHOP = {
+  name: 'ดลโมบาย',
+  addr: 'โทร. 0XX-XXX-XXXX',
+  logo: '',
+  terms: 'ราคาอาจเปลี่ยนแปลงตามเงื่อนไขบริษัทสินเชื่อ\nลูกค้าต้องผ่านการอนุมัติจากบริษัทสินเชื่อ\nระยะเวลาผ่อนและค่างวดขึ้นอยู่กับดุลพินิจบริษัทฯ',
+  sign: '',
+  signsub: 'ผู้เสนอราคา'
+};
+
+function newSheet(name) {
+  return {
+    id: uid(), name: name || 'ตารางที่ 1',
+    provider: 'VNC', condition: 'มือ 1', rate: 25,
+    date: todayISO(), by: '',
+    cols: [6, 9, 12, 18, 24].map(m => ({ id: uid(), months: m })),
+    rows: []
+  };
+}
+
+function defaultState() {
+  const s = newSheet('ตารางที่ 1');
+  const c = s.cols.map(x => x.id);
+  s.rows = [
+    { id: uid(), model: 'iPhone 15',      cap: '128GB', cost: 17500, cash: 21900, pay: { [c[0]]: 2100, [c[1]]: 1600, [c[2]]: 1350, [c[3]]: 1050, [c[4]]: 890 } },
+    { id: uid(), model: 'iPhone 16',      cap: '128GB', cost: 21500, cash: 25900, pay: { [c[0]]: 2500, [c[1]]: 1900, [c[2]]: 1600, [c[3]]: 1250, [c[4]]: 1050 } },
+    { id: uid(), model: 'iPhone 16 Pro',  cap: '256GB', cost: 34500, cash: 39900, pay: { [c[0]]: 3800, [c[1]]: 2900, [c[2]]: 2450, [c[3]]: 1900, [c[4]]: 1600 } }
+  ];
+  return { sheets: [s], activeId: s.id, shop: { ...DEFAULT_SHOP } };
+}
+
+let state = loadState() || defaultState();
+let undoJSON = null;
+let query = '';
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return null;
+    const s = JSON.parse(raw);
+    if (!s || !Array.isArray(s.sheets) || !s.sheets.length) return null;
+    s.shop = { ...DEFAULT_SHOP, ...(s.shop || {}) };
+    if (!s.activeId || !s.sheets.some(x => x.id === s.activeId)) s.activeId = s.sheets[0].id;
+    return s;
+  } catch (e) { return null; }
+}
+const saveState = () => { try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) {} };
+
+const activeSheet = () => state.sheets.find(s => s.id === state.activeId) || state.sheets[0];
+
+/* ================= toast ================= */
+let toastTimer;
+function toast(msg, actLabel, actFn) {
+  const t = $('#toast');
+  t.innerHTML = '';
+  const sp = document.createElement('span'); sp.textContent = msg; t.appendChild(sp);
+  if (actLabel) {
+    const b = document.createElement('button');
+    b.className = 'toast-act'; b.type = 'button'; b.textContent = actLabel;
+    b.onclick = () => { hideToast(); actFn(); };
+    t.appendChild(b);
+  }
+  t.hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(hideToast, 6500);
+}
+function hideToast() { $('#toast').hidden = true; clearTimeout(toastTimer); }
+function pushUndo() { undoJSON = JSON.stringify(state); }
+function doUndo() {
+  if (!undoJSON) return;
+  state = JSON.parse(undoJSON); undoJSON = null;
+  saveState(); renderAll(); toast('กู้คืนแล้ว');
+}
+
+/* ================= paper presets ================= */
+const PAPER_PRESETS = {
+  a4l: { label: 'A4 แนวนอน', w: '297mm', size: 'A4 landscape',  js: { unit:'mm', format:'a4', orientation:'landscape' } },
+  a4p: { label: 'A4 แนวตั้ง', w: '210mm', size: 'A4 portrait',   js: { unit:'mm', format:'a4', orientation:'portrait'  } },
+  a5l: { label: 'A5 แนวนอน', w: '210mm', size: 'A5 landscape',  js: { unit:'mm', format:'a5', orientation:'landscape' } },
+  a5p: { label: 'A5 แนวตั้ง', w: '148mm', size: 'A5 portrait',   js: { unit:'mm', format:'a5', orientation:'portrait'  } },
+};
+let paperKey = localStorage.getItem('donmobile.paper') || 'a4l';
+function applyPaper() {
+  const p = PAPER_PRESETS[paperKey] || PAPER_PRESETS.a4l;
+  document.documentElement.style.setProperty('--paper-w', p.w);
+  let st = document.getElementById('pageStyle');
+  if (!st) { st = document.createElement('style'); st.id = 'pageStyle'; document.head.appendChild(st); }
+  st.textContent = `@page{size:${p.size};margin:8mm}`;
+  $('#paperSel').value = paperKey;
+}
+
+/* ================= render: rail ================= */
+function renderRail() {
+  const rail = $('#rail');
+  rail.innerHTML = state.sheets.map(s => `
+    <button class="tab" role="tab" data-id="${s.id}" aria-selected="${s.id === state.activeId}">
+      <span class="n">${esc(s.name)}</span>
+      <span class="d">${esc(s.provider || '—')} · ${s.rows.length} รายการ</span>
+      <span class="tabx" data-del="${s.id}" title="ลบ">✕</span>
+    </button>`).join('')
+    + `<button class="tab" data-new="1" style="padding-right:14px"><span class="n">+ ตารางใหม่</span></button>`;
+
+  rail.querySelectorAll('.tab[data-id]').forEach(el => {
+    el.addEventListener('click', e => {
+      if (e.target.closest('[data-del]')) return;
+      state.activeId = el.dataset.id; saveState(); renderAll();
+    });
+  });
+  rail.querySelectorAll('[data-del]').forEach(el => {
+    el.addEventListener('click', e => { e.stopPropagation(); deleteSheet(el.dataset.del); });
+  });
+  const nb = rail.querySelector('[data-new]');
+  if (nb) nb.addEventListener('click', addSheet);
+}
+
+/* ================= render: meta ================= */
+function renderMeta() {
+  const s = activeSheet();
+  $('#m-provider').value  = s.provider || '';
+  $('#m-condition').value = s.condition || '';
+  $('#m-rate').value      = s.rate ?? '';
+  $('#m-date').value      = s.date || todayISO();
+  $('#m-by').value        = s.by || '';
+}
+
+/* ================= render: grid ================= */
+function renderGrid() {
+  const s = activeSheet();
+  const wrap = $('#gridwrap');
+  const q = query.trim().toLowerCase();
+
+  const capOpts = [...new Set([...ALL_CAPS, ...s.rows.map(r => r.cap).filter(Boolean)])];
+
+  const thead = `
+    <thead><tr>
+      <th style="width:44px">#</th>
+      <th>รุ่น</th>
+      <th>ความจุ</th>
+      <th class="g-internal">ราคาทุน<span class="sub">บาท</span></th>
+      <th class="g-internal">ราคาสด<span class="sub">บาท</span></th>
+      ${s.cols.map((c, i) => `
+        <th class="g-tenor" draggable="true" data-col="${c.id}" data-idx="${i}">
+          <span class="colmove">
+            <button class="movebtn" data-mv="-1" data-col="${c.id}" ${i === 0 ? 'disabled' : ''} title="เลื่อนซ้าย">‹</button>
+            <span class="colname">${c.months} เดือน</span>
+            <button class="movebtn" data-mv="1" data-col="${c.id}" ${i === s.cols.length - 1 ? 'disabled' : ''} title="เลื่อนขวา">›</button>
+          </span>
+          <span class="sub">บาท/เดือน</span>
+        </th>`).join('')}
+      <th>กำไร<span class="sub">บาท</span></th>
+      <th style="width:56px"></th>
+    </tr></thead>`;
+
+  const rowsHTML = s.rows.map((r, i) => {
+    const hide = q && !((r.model || '') + ' ' + (r.cap || '')).toLowerCase().includes(q);
+    const profit = num(r.cash) - num(r.cost);
+    return `
+    <tr data-row="${r.id}" ${hide ? 'style="display:none"' : ''}>
+      <td class="calc" style="color:var(--ink-3)">${i + 1}</td>
+      <td class="model"><input list="modelList" data-f="model" value="${esc(r.model || '')}" placeholder="รุ่น"></td>
+      <td class="cap">
+        <input list="capList" data-f="cap" value="${esc(r.cap || '')}" placeholder="ความจุ">
+      </td>
+      <td class="num g-internal"><input inputmode="decimal" data-f="cost" value="${esc(r.cost ?? '')}"></td>
+      <td class="num g-internal"><input inputmode="decimal" data-f="cash" value="${esc(r.cash ?? '')}"></td>
+      ${s.cols.map(c => `<td class="num g-tenor"><input inputmode="decimal" data-f="pay" data-col="${c.id}" value="${esc(r.pay?.[c.id] ?? '')}"></td>`).join('')}
+      <td class="calc" data-profit>${has(r.cash) || has(r.cost) ? fmt(profit) : '—'}</td>
+      <td class="rowtools">
+        <button class="rowbtn" data-dup="${r.id}" title="คัดลอกแถว">⧉</button>
+        <button class="rowbtn del" data-rm="${r.id}" title="ลบแถว">✕</button>
+      </td>
+    </tr>`;
+  }).join('');
+
+  wrap.innerHTML = `
+    ${thead}
+    <tbody>${rowsHTML || `<tr><td colspan="${7 + s.cols.length}" class="empty">ยังไม่มีรายการ — กด “+ เพิ่มรุ่น” หรือ “+ เพิ่มแถว”</td></tr>`}</tbody>
+    <datalist id="modelList">${Object.keys(CATALOG).map(m => `<option value="${esc(m)}"></option>`).join('')}</datalist>
+    <datalist id="capList">${capOpts.map(c => `<option value="${esc(c)}"></option>`).join('')}</datalist>`;
+
+  $('#rowCount').textContent = `${s.rows.length} รายการ · ${s.cols.length} งวด`;
+
+  // column move buttons
+  wrap.querySelectorAll('[data-mv]').forEach(b => b.addEventListener('click', e => {
+    e.preventDefault(); e.stopPropagation();
+    moveCol(b.dataset.col, parseInt(b.dataset.mv, 10));
+  }));
+
+  // drag & drop column reorder
+  let dragId = null;
+  wrap.querySelectorAll('th[draggable]').forEach(th => {
+    th.addEventListener('dragstart', e => { dragId = th.dataset.col; e.dataTransfer.effectAllowed = 'move'; });
+    th.addEventListener('dragover', e => {
+      if (!dragId || dragId === th.dataset.col) return;
+      e.preventDefault();
+      const rect = th.getBoundingClientRect();
+      const after = e.clientX > rect.left + rect.width / 2;
+      wrap.querySelectorAll('th').forEach(x => x.classList.remove('drag-left', 'drag-right'));
+      th.classList.add(after ? 'drag-right' : 'drag-left');
+    });
+    th.addEventListener('drop', e => {
+      e.preventDefault();
+      if (!dragId) return;
+      const from = s.cols.findIndex(c => c.id === dragId);
+      let to = s.cols.findIndex(c => c.id === th.dataset.col);
+      if (from < 0 || to < 0) return;
+      const rect = th.getBoundingClientRect();
+      if (e.clientX > rect.left + rect.width / 2) to++;
+      const [item] = s.cols.splice(from, 1);
+      if (from < to) to--;
+      s.cols.splice(to, 0, item);
+      dragId = null; saveState(); renderGrid(); renderPreviewSoon();
+    });
+    th.addEventListener('dragend', () => {
+      dragId = null;
+      wrap.querySelectorAll('th').forEach(x => x.classList.remove('drag-left', 'drag-right'));
+    });
+  });
+}
+
+/* ================= grid events ================= */
+$('#gridwrap').addEventListener('input', e => {
+  const inp = e.target.closest('input[data-f]');
+  if (!inp) return;
+  const tr = inp.closest('tr[data-row]');
+  if (!tr) return;
+  const s = activeSheet();
+  const row = s.rows.find(r => r.id === tr.dataset.row);
+  if (!row) return;
+  const f = inp.dataset.f;
+  if (f === 'pay') {
+    row.pay = row.pay || {};
+    row.pay[inp.dataset.col] = inp.value;
+  } else {
+    row[f] = inp.value;
+  }
+  const pc = tr.querySelector('[data-profit]');
+  if (pc) pc.textContent = (has(row.cash) || has(row.cost)) ? fmt(num(row.cash) - num(row.cost)) : '—';
+  saveState();
+  renderPreviewSoon();
+});
+
+$('#gridwrap').addEventListener('click', e => {
+  const s = activeSheet();
+  const rm = e.target.closest('[data-rm]');
+  if (rm) {
+    pushUndo();
+    const i = s.rows.findIndex(r => r.id === rm.dataset.rm);
+    if (i >= 0) s.rows.splice(i, 1);
+    saveState(); renderAll();
+    toast('ลบแถวแล้ว', 'เลิกทำ', doUndo);
+    return;
+  }
+  const dp = e.target.closest('[data-dup]');
+  if (dp) {
+    const i = s.rows.findIndex(r => r.id === dp.dataset.dup);
+    if (i >= 0) {
+      const copy = JSON.parse(JSON.stringify(s.rows[i]));
+      copy.id = uid();
+      s.rows.splice(i + 1, 0, copy);
+      saveState(); renderAll();
+    }
+  }
+});
+
+$('#rowSearch').addEventListener('input', e => { query = e.target.value; renderGrid(); });
+
+/* ================= sheet ops ================= */
+function addSheet() {
+  const s = newSheet('ตารางที่ ' + (state.sheets.length + 1));
+  state.sheets.push(s);
+  state.activeId = s.id;
+  saveState(); renderAll();
+  toast('เพิ่มตารางใหม่แล้ว');
+}
+function deleteSheet(id) {
+  if (state.sheets.length <= 1) { toast('ต้องเหลืออย่างน้อย 1 ตาราง'); return; }
+  pushUndo();
+  const i = state.sheets.findIndex(s => s.id === id);
+  if (i < 0) return;
+  state.sheets.splice(i, 1);
+  if (state.activeId === id) state.activeId = state.sheets[Math.max(0, i - 1)].id;
+  saveState(); renderAll();
+  toast('ลบตารางแล้ว', 'เลิกทำ', doUndo);
+}
+function dupSheet() {
+  const s = activeSheet();
+  const copy = JSON.parse(JSON.stringify(s));
+  copy.id = uid();
+  copy.name = s.name + ' (สำเนา)';
+  copy.cols.forEach(c => c.id = uid());
+  copy.rows.forEach(r => {
+    r.id = uid();
+    const np = {};
+    s.cols.forEach((oc, i) => { np[copy.cols[i].id] = r.pay?.[oc.id] ?? ''; });
+    r.pay = np;
+  });
+  state.sheets.push(copy);
+  state.activeId = copy.id;
+  saveState(); renderAll();
+  toast('คัดลอกตารางแล้ว');
+}
+function moveCol(colId, dir) {
+  const s = activeSheet();
+  const i = s.cols.findIndex(c => c.id === colId);
+  const j = i + dir;
+  if (i < 0 || j < 0 || j >= s.cols.length) return;
+  [s.cols[i], s.cols[j]] = [s.cols[j], s.cols[i]];
+  saveState(); renderGrid(); renderPreviewSoon();
+}
+
+/* ================= meta events ================= */
+const onMeta = (sel, key) => {
+  $(sel).addEventListener('input', e => {
+    const s = activeSheet();
+    s[key] = e.target.value;
+    saveState(); renderRail(); renderPreviewSoon();
+  });
+};
+onMeta('#m-provider', 'provider');
+onMeta('#m-condition', 'condition');
+onMeta('#m-rate', 'rate');
+onMeta('#m-by', 'by');
+
+$('#btnDup').addEventListener('click', dupSheet);
+$('#btnDelSheet').addEventListener('click', () => deleteSheet(activeSheet().id));
+
+$('#btnAddRow').addEventListener('click', () => {
+  const s = activeSheet();
+  s.rows.push({ id: uid(), model: '', cap: '', cost: '', cash: '', pay: {} });
+  saveState(); renderAll();
+});
+
+$('#btnAddTenor').addEventListener('click', () => {
+  const s = activeSheet();
+  const last = s.cols.length ? s.cols[s.cols.length - 1].months : 0;
+  const m = prompt('จำนวนเดือนของงวดใหม่ (เช่น 6, 9, 12, 18, 24, 36)', String(last ? last + 6 : 6));
+  if (m === null) return;
+  const months = parseInt(m, 10);
+  if (!months || months <= 0) { toast('จำนวนเดือนไม่ถูกต้อง'); return; }
+  s.cols.push({ id: uid(), months });
+  saveState(); renderAll();
+});
+
+/* ================= paper HTML ================= */
+function paperHTML(s) {
+  const shop = state.shop;
+  const rate = num(s.rate);
+  const tenors = s.cols;
+
+  const logo = shop.logo
+    ? `<img class="paper-logo" src="${esc(shop.logo)}" alt="" crossorigin="anonymous">`
+    : '';
+
+  const terms = String(shop.terms || '').split('\n').map(x => x.trim()).filter(Boolean);
+
+  const head = `
+    <thead><tr>
+      <th class="l">รุ่น</th>
+      <th class="l">ความจุ</th>
+      <th>ราคาสด<span class="sub">บาท</span></th>
+      <th class="hero">ดาวน์ ${rate ? fmt(rate) + '%' : ''}<span class="sub">บาท</span></th>
+      ${tenors.map(c => `<th>${esc(c.months)} เดือน<span class="sub">บาท/เดือน</span></th>`).join('')}
+    </tr></thead>`;
+
+  const body = s.rows.length
+    ? s.rows.map(r => {
+        const down = num(r.cash) * rate / 100;
+        return `<tr>
+          <td class="l">${esc(r.model) || '—'}</td>
+          <td class="l">${esc(r.cap) || '—'}</td>
+          <td>${fmt(r.cash)}</td>
+          <td class="hero">${rate ? fmt(down) : '—'}</td>
+          ${tenors.map(c => {
+            const v = r.pay?.[c.id];
+            return `<td class="${has(v) ? '' : 'dash'}">${has(v) ? fmt(v) : '—'}</td>`;
+          }).join('')}
+        </tr>`;
+      }).join('')
+    : `<tr><td class="l dash" colspan="${4 + tenors.length}">ยังไม่มีรายการ</td></tr>`;
+
+  const chip = [s.provider, s.condition, rate ? `ดาวน์ ${fmt(rate)}%` : ''].filter(Boolean).join(' · ');
+
+  return `
+  <div class="paper">
+    <div class="paper-head">
+      ${logo}
+      <div class="paper-id">
+        <div class="paper-shop">${esc(shop.name || '')}</div>
+        <div class="paper-contact">${esc(shop.addr || '')}</div>
+      </div>
+      <div class="paper-meta">
+        <div class="paper-title">ตารางผ่อน</div>
+        ${chip ? `<div class="paper-rate">${esc(chip)}</div>` : ''}
+        <div class="paper-date">อัปเดต <b>${esc(thDate(s.date))}</b>${s.by ? ' · โดย ' + esc(s.by) : ''}</div>
+      </div>
+    </div>
+    <table class="paper-table">${head}<tbody>${body}</tbody></table>
+    <div class="paper-foot">
+      <div class="paper-cond">
+        ${terms.length ? `<div class="ttl">เงื่อนไข</div><ul>${terms.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}
+      </div>
+      <div class="paper-sign">
+        <div class="line"></div>
+        ${esc(shop.sign || '')}${shop.sign ? '<br>' : ''}${esc(shop.signsub || '')}
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ================= preview / render root ================= */
+function renderPreview() {
+  const root = $('#renderRoot');
+  const list = $('#prevAll').checked ? state.sheets : [activeSheet()];
+  root.innerHTML = list.map(paperHTML).join('');
+  return root;
+}
+const renderPreviewSoon = debounce(renderPreview, 300);
+
+/* ================= print ================= */
+$('#btnPrint').addEventListener('click', () => {
+  renderPreview();
+  // รอ layout + ฟอนต์ 1 เฟรมก่อนเปิด print dialog
+  requestAnimationFrame(() => setTimeout(() => window.print(), 60));
+});
+
+/* ================= PDF ================= */
+let pdfBusy = false;
+$('#btnPdf').addEventListener('click', async () => {
+  if (pdfBusy) return;
+  const btn = $('#btnPdf');
+  pdfBusy = true;
+  const oldLabel = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'กำลังสร้าง PDF…';
+
+  try {
+    // 1) ต้องมีไลบรารี
+    if (!window.html2pdf) throw new Error('no-lib');
+
+    // 2) รอฟอนต์โหลดเสร็จ ไม่งั้นตัวอักษรไทยจะเป็นกล่อง
+    if (document.fonts && document.fonts.ready) {
+      await document.fonts.ready;
+    }
+
+    // 3) สร้าง DOM ใบพิมพ์
+    const root = renderPreview();
+    const papers = root.querySelectorAll('.paper');
+    if (!papers.length) throw new Error('empty');
+
+    // 4) รอ layout จริง 2 เฟรม + ให้รูปโลโก้โหลดเสร็จ
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+    await Promise.all(Array.from(root.querySelectorAll('img')).map(img =>
+      img.complete ? Promise.resolve() : new Promise(res => { img.onload = img.onerror = res; })
+    ));
+
+    // 5) ตั้งชื่อไฟล์
+    const s = activeSheet();
+    const all = $('#prevAll').checked;
+    const fname = all
+      ? `ตารางผ่อน-ทั้งหมด-${state.sheets.length}ใบ.pdf`
+      : `ตารางผ่อน-${(s.name || 'sheet').replace(/[\\/:*?"<>|]/g, '-')}-${thDate(s.date).replace(/\//g, '')}.pdf`;
+
+    const preset = PAPER_PRESETS[paperKey] || PAPER_PRESETS.a4l;
+
+    // 6) สั่ง render
+    await html2pdf()
+      .set({
+        margin: 0,
+        filename: fname,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          allowTaint: false,
+          backgroundColor: '#ffffff',
+          scrollX: 0,
+          scrollY: 0,
+          windowWidth: root.scrollWidth,
+          width: root.scrollWidth
+        },
+        jsPDF: preset.js,
+        pagebreak: { mode: ['css', 'legacy'], after: '.paper' }
+      })
+      .from(root)
+      .save();
+
+    toast('บันทึก PDF แล้ว — เช็คในโฟลเดอร์ Downloads');
+  } catch (err) {
+    console.error('[PDF]', err);
+    if (err && err.message === 'no-lib') {
+      toast('โหลดไลบรารี PDF ไม่ได้ (อาจไม่มีเน็ต) — กำลังเปิดหน้าต่างพิมพ์แทน');
+    } else {
+      toast('สร้าง PDF ไม่สำเร็จ — เปิดหน้าต่างพิมพ์แทน');
+    }
+    renderPreview();
+    setTimeout(() => window.print(), 300);
+  } finally {
+    pdfBusy = false;
+    btn.disabled = false;
+    btn.textContent = oldLabel;
+  }
+});
+
+/* ================= paper selector ================= */
+(function initPaperSel() {
+  const sel = $('#paperSel');
+  sel.innerHTML = Object.entries(PAPER_PRESETS)
+    .map(([k, v]) => `<option value="${k}">${esc(v.label)}</option>`).join('');
+  sel.addEventListener('change', () => {
+    paperKey = sel.value;
+    localStorage.setItem('donmobile.paper', paperKey);
+    applyPaper();
+    renderPreview();
+  });
+})();
+
+$('#prevAll').addEventListener('change', renderPreview);
+
+/* ================= modals ================= */
+function openModal(sel) { $(sel).hidden = false; }
+function closeModal(sel) { $(sel).hidden = true; }
+
+document.addEventListener('click', e => {
+  const c = e.target.closest('[data-close]');
+  if (c) { const m = c.closest('.modal'); if (m) m.hidden = true; }
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') $$('.modal').forEach(m => m.hidden = true);
+});
+$$('.modal').forEach(m => m.addEventListener('click', e => { if (e.target === m) m.hidden = true; }));
+
+/* ----- shop ----- */
+$('#btnShop').addEventListener('click', () => {
+  const sh = state.shop;
+  $('#s-name').value    = sh.name || '';
+  $('#s-addr').value    = sh.addr || '';
+  $('#s-logo').value    = sh.logo || '';
+  $('#s-terms').value   = sh.terms || '';
+  $('#s-sign').value    = sh.sign || '';
+  $('#s-signsub').value = sh.signsub || '';
+  openModal('#shopModal');
+});
+$('#btnShopSave').addEventListener('click', () => {
+  state.shop = {
+    name:    $('#s-name').value,
+    addr:    $('#s-addr').value,
+    logo:    $('#s-logo').value.trim(),
+    terms:   $('#s-terms').value,
+    sign:    $('#s-sign').value,
+    signsub: $('#s-signsub').value
+  };
+  saveState();
+  applyBrandLogo();
+  renderPreview();
+  closeModal('#shopModal');
+  toast('บันทึกข้อมูลร้านแล้ว');
+});
+
+/* ----- data ----- */
+$('#btnData').addEventListener('click', () => {
+  $('#dataText').value = JSON.stringify(state, null, 2);
+  openModal('#dataModal');
+});
+$('#btnCopyData').addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText($('#dataText').value);
+    toast('คัดลอกแล้ว');
+  } catch {
+    $('#dataText').select();
+    document.execCommand('copy');
+    toast('คัดลอกแล้ว');
+  }
+});
+$('#btnDownloadData').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `donmobile-backup-${todayISO()}.json`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+$('#btnImportData').addEventListener('click', () => {
+  try {
+    const obj = JSON.parse($('#dataText').value);
+    if (!obj || !Array.isArray(obj.sheets) || !obj.sheets.length) throw new Error('bad');
+    pushUndo();
+    state = obj;
+    state.shop = { ...DEFAULT_SHOP, ...(state.shop || {}) };
+    if (!state.activeId || !state.sheets.some(s => s.id === state.activeId)) state.activeId = state.sheets[0].id;
+    saveState(); renderAll(); closeModal('#dataModal');
+    toast('นำเข้าข้อมูลแล้ว', 'เลิกทำ', doUndo);
+  } catch {
+    toast('ข้อมูลไม่ถูกต้อง (ต้องเป็น JSON ของแอปนี้)');
+  }
+});
+
+/* ----- model picker ----- */
+$('#btnPick').addEventListener('click', () => {
+  $('#pickSearch').value = '';
+  renderPicker('');
+  openModal('#pickModal');
+});
+$('#pickSearch').addEventListener('input', e => renderPicker(e.target.value));
+
+function renderPicker(q) {
+  const kw = q.trim().toLowerCase();
+  const list = $('#pickList');
+  const groups = Object.entries(CATALOG).filter(([m, caps]) =>
+    !kw || m.toLowerCase().includes(kw) || caps.some(c => c.toLowerCase().includes(kw))
+  );
+  if (!groups.length) { list.innerHTML = `<div class="empty">ไม่พบรุ่นที่ค้นหา</div>`; return; }
+  list.innerHTML = groups.map(([m, caps]) => `
+    <div class="pick-series">${esc(m)}</div>
+    <div class="pick-row">
+      <div class="pick-name"></div>
+      ${caps.map(c => `<button class="capbtn" data-model="${esc(m)}" data-cap="${esc(c)}" type="button">${esc(c)}</button>`).join('')}
+    </div>`).join('');
+
+  list.querySelectorAll('.capbtn').forEach(b => b.addEventListener('click', () => {
+    const s = activeSheet();
+    s.rows.push({ id: uid(), model: b.dataset.model, cap: b.dataset.cap, cost: '', cash: '', pay: {} });
+    saveState();
+    renderGrid();
+    renderPreviewSoon();
+    b.classList.add('added');
+    setTimeout(() => b.classList.remove('added'), 700);
+  }));
+}
+
+/* ================= brand logo ================= */
+function applyBrandLogo() {
+  const img = $('#brandLogo');
+  const url = state.shop.logo;
+  if (url) { img.src = url; img.hidden = false; img.onerror = () => { img.hidden = true; }; }
+  else { img.removeAttribute('src'); img.hidden = true; }
+}
+
+/* ================= boot ================= */
+function renderAll() {
+  renderRail();
+  renderMeta();
+  renderGrid();
+  renderPreview();
+  applyBrandLogo();
+}
+
+(function boot() {
+  applyPaper();
+  const s = activeSheet();
+  if (!s.date) s.date = todayISO();
+  // อัปเดตวันที่อัตโนมัติทุกวัน
+  const today = todayISO();
+  if (s.date !== today) { s.date = today; }
+  saveState();
+  renderAll();
+})();
+
+window.addEventListener('beforeunload', saveState);
+</script>
+</body>
+</html>
